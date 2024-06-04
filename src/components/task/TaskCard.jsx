@@ -6,6 +6,7 @@ import Tasks  from "./Tasks";
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
+
 const TaskCard = ({taskCardList, setTaskCardList,taskCard}) => {
   const [ inputText, setInputText ] = useState('');
   const [ taskList, setTaskList ] = useState([]);
@@ -29,8 +30,10 @@ const TaskCard = ({taskCardList, setTaskCardList,taskCard}) => {
         <TaskCardTitle />
         <TaskCardDeleteButton taskCard={taskCard} taskCardList={taskCardList} setTaskCardList={setTaskCardList}/>
       </div>
-      <TaskAddInput inputText={inputText} setInputText={setInputText} taskList={taskList} setTaskList={setTaskList}/>
-      <Tasks inputText={inputText} taskList={taskList} setTaskList={setTaskList}/>
+      <div>
+        <TaskAddInput inputText={inputText} setInputText={setInputText} taskList={taskList} setTaskList={setTaskList}/>
+        <Tasks inputText={inputText} taskList={taskList} setTaskList={setTaskList}/>
+      </div>
     </div>
   )
 }

@@ -22,7 +22,7 @@ const TaskCardTitle = () => {
     setIsClick(false)
   }
   return (
-    <div onClick={handleClick} className={"taskCardTitleInputArea"}>
+    <div onClick={handleClick} className={"taskCardTitleInputArea"} data-dndkit-disabled-dnd-flag="true">
       {isClick ? 
       (<form onSubmit={handleSubmit}>
         <input className={"taskCardTitleInput"} type="text" autoFocus onChange={handleChange} onBlur={handleBlur} value={inputCardTitle} maxLength={10}/>

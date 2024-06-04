@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
-import TaskCard from '../task/TaskCard'
+import React, { useState } from 'react';
+import TaskCard from '../task/TaskCard';
 import AddTaskCardButton from '../task/button/AddTaskCardButton';
-import { DndContext } from '@dnd-kit/core';
+import { DndContext, useSensor, useSensors } from '@dnd-kit/core';
 import { SortableContext, horizontalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
+import { MouseSensor, KeyboardSensor } from './DndSensors';
 
 const TaskCards = () => {
-  const [taskCardsList, setTaskCardsList] = useState([{id: 0, draggableId: "item0"}]);
+  const [taskCardsList, setTaskCardsList] = useState([{id: "0", draggableId: "item0"}]);
 
   const handleDragOver = (event) => {
     const { active, over } = event;
+    console.log(event);
 
     if (!over) {
       return;
@@ -19,12 +21,16 @@ const TaskCards = () => {
       const newIndex = taskCardsList.findIndex((v) => v.id === over.id);
       setTaskCardsList(arrayMove(taskCardsList, oldIndex, newIndex));
     }
-  }
+  };
+
+  const mouseSensor = useSensor(MouseSensor);
+  const keyboardSensor = useSensor(KeyboardSensor);
+  const sensors = useSensors(mouseSensor, keyboardSensor);
 
   return (
-    <DndContext onDragOver={handleDragOver}>
+    <DndContext onDragOver={handleDragOver} sensors={sensors}>
       <SortableContext items={taskCardsList} strategy={horizontalListSortingStrategy}>
-        <div className='taskCardsArea'>        
+        <div className='taskCardsArea'>
           {taskCardsList.map((taskCard) => (
             <TaskCard key={taskCard.id} taskCardList={taskCardsList} setTaskCardList={setTaskCardsList} taskCard={taskCard}/>
           ))}
@@ -32,7 +38,7 @@ const TaskCards = () => {
         </div>
       </SortableContext>
     </DndContext>
-  )
-}
+  );
+};
 
-export default TaskCards
+export default TaskCards;
